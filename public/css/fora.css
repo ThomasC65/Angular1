@@ -1,0 +1,33 @@
+body{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.comment-box .comment-text{
+    float: left;
+    width: 400px;
+}
+.comment-box .icons {
+    margin-left: 410px;
+}
+
+.comment-icon{
+    width: 40px;
+}
+
+div.comment-box{
+    border: thin blue solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.score-dislike{
+    border-color: red;
+    color: red;
+}
+
+.score-like{
+    border-color: darkgreen;
+    color: darkgreen;
+}

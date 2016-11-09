@@ -1,0 +1,12 @@
+<div class="user-panel">
+
+    <div>Logged in as <strong>{{vm.loggedIn.name}}</strong></div>
+
+
+    <div>
+        <h3>Also here </h3>
+
+        <div ng-repeat="user in vm.users" ng-if="user.name != vm.loggedIn.name">{{user.name}}</div>
+
+    </div>
+</div>

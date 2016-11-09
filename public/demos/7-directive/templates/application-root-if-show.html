@@ -1,0 +1,29 @@
+<section class="application-root">
+
+    <header>
+        <h2>What a marvellous App</h2>
+    </header>
+
+
+
+    <div>Root app ses the loggedIn as : {{$ctrl.loggedIn.name}}</div>
+
+    <button ng-click="$ctrl.setBlue()">Set stuff blue</button>
+
+    <h2> Show: <input ng-model="$ctrl.show" type="checkbox"></h2>
+    <panel-component users = "$ctrl.users" logged-in="$ctrl.loggedIn"
+                     ng-show="$ctrl.show" name="ngShowPanel">
+
+    </panel-component>
+
+
+    <h2> If: <input ng-model="$ctrl.if" type="checkbox"></h2>
+    <panel-component users = "$ctrl.users" logged-in="$ctrl.loggedIn"
+                     ng-if="$ctrl.if" name="ngShowPanel">
+
+    </panel-component>
+
+
+    <footer>Made with &hearts; in Toulouse</footer>
+
+</section>

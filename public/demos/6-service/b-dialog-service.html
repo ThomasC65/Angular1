@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Dialog</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+    <style>
+        .heard{
+
+        }
+    </style>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body>
+
+<div ng-controller="ForrestCtrl">
+
+
+    <h1>My name is Forrest Gump and I say "{{forrestModel.data }}"</h1>
+
+
+    <!-- check the reuse of the data variable -->
+    <input ng-model="forrestModel.data " ng-change="store(forrestModel.data )">
+</div>
+
+<div ng-controller="JennyCtrl">
+
+
+    <h1>Forrest, I hear you. You said : </h1>
+
+    <div class="heard hightlight" >{{jennyModel.data}}</div>
+    <button ng-click="callForrest()">Jenny calls Forrest</button>
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+    // TODO : fill  $scope.store and $scope.callForrest to make a sync
+
+    angular.module("demo", [])
+            .controller("ForrestCtrl", function ($scope, forrestService) {
+
+                $scope.forrestModel = {
+                    data : "My name is Forrest Gump"
+                };
+
+                $scope.store = function (data) {
+
+                }
+
+            })
+            .controller("JennyCtrl", function ($scope, forrestService) {
+
+                $scope.jennyModel = {
+                    data : "Didn't heard"
+                };
+
+
+                $scope.callForrest = function () {
+
+                }
+            })
+            .factory("forrestService", function () {
+
+                var data="";
+
+                var service = {
+
+                    storeData: function (data) {
+                        this.data = data;
+                    }
+                }
+                return service;
+
+            })
+
+
+</script>
+</html>

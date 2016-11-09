@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Ng Messages</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+    <style>
+
+        form.ng-valid{
+            background-color: lightcyan;
+        }
+        form.ng-invalid{
+            background-color: lightcoral;
+        }
+        input.ng-valid {
+            color:blue;
+            border: thin solid darkgreen;
+        }
+        input.ng-invalid {
+            color:red;
+            border: medium dashed darkmagenta;
+        }
+        p {color:blue;}
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<h1>I work with {{copy.email}} wich is a {{copy.smart}} smart guy</h1>
+
+<form  class="simple-form" name="form">
+
+
+    Name: <input name="name" type="text" ng-model="model.current.name" ng-minlength="5" ng-maxlength="20" required /><br />
+    E-mail: <input name="email" type="email" ng-model="model.current.email" /><br />
+    Admin : <input type="radio" ng-model="model.current.admin" value="true" />oui
+    <input type="radio" ng-model="model.current.admin" value="false" />non<br />
+
+    <input type="button" ng-click="reset()" value="Reset" />
+    <input type="submit" ng-click="update(user)" value="Save" />
+
+    <button type="submit" ng-click="submit()">OK</button>
+
+    <div ng-messages="form.$error" style="color:maroon" role="alert">
+        <div ng-message="required">All fields are required</div>
+        <div ng-message="minlength">Your field is too short</div>
+        <div ng-message="maxlength">Your field is too long</div>
+    </div>
+
+    <div>form.$error : {{form.$error|json}}</div>
+</form>
+
+
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", ['ngMessages'])
+            .controller("AppCtrl", function($scope){
+
+                $scope.user={email:"default@robusta.io", smart:false}
+                $scope.data=5;
+
+
+                $scope.copy = angular.copy($scope.user)
+                //$scope.form.$setValidity("size", false);
+
+                $scope.submit = function(){
+                    $scope.copy =  angular.copy($scope.user);
+                }
+
+            })
+
+
+</script>
+</html>

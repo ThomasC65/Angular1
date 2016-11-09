@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>FORMS</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+
+    <style>
+
+        .ng-dirty{
+            border:blue thin solid;
+        }
+
+        .ng-pristine{
+            border:red thin solid;
+        }
+
+        .ng-valid{
+            background-color: #c3ffc8;
+        }
+
+        .ng-invalid{
+            background-color: #bca1a8;
+        }
+
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<ul>
+    <li ng-repeat="user in users">
+        {{user.name}} - {{user.email}} - {{user.admin}}
+        <button ng-click="model.current = user">Edit</button>
+
+    </li>
+</ul>
+
+<h2>You typed : {{model.current.name}}</h2>
+<div>
+    <form novalidate>
+
+        Name: <input type="text" ng-model="model.current.name" /><br />
+        E-mail: <input type="email" ng-model="model.current.email" /><br />
+        Admin : <input type="radio" ng-model="model.current.admin" value="true" />oui
+        <input type="radio" ng-model="model.current.admin" value="false" />non<br />
+
+        <input type="button" ng-click="reset()" value="Reset" />
+        <input type="submit" ng-click="update(user)" value="Save" />
+    </form>
+</div>
+
+
+
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+                $scope.model = {}
+                $scope.users = globals.users;
+
+                //TODO : le reset() ne marche pas
+                // Créer une fonction edit()
+                // Utiliser angular.copy()
+                //checker le bouton radio
+
+            })
+
+</script>
+</html>

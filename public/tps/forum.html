@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="forum">
+<head>
+
+
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+    <meta charset="UTF-8">
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="../css/fora.css"/>
+    <title>Forum</title>
+
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="../javascripts/libs/angular.min.js"></script>
+    <script type="text/javascript" src="../javascripts/mock-data.js"></script>
+    <script type="text/javascript" src="forum.js"></script>
+
+
+    <style>
+        .like{
+            color : green;
+        }
+        .dislike{
+             color: red;
+        }
+
+    </style>
+
+</head>
+<body>
+<div ng-controller="ForumController">
+    <h2> Here are the users </h2>
+    <ul class="collection">
+        <li class="collection-item"  ng-repeat="user in users">{{user.id }} :  {{user.name}}({{user.email}}        </li>
+    </ul>
+    <h2> Here are the titles </h2>
+    <ul class="collection">
+        <li class="collection-item" ng-repeat="topic in topics" >   {{topic.title}}
+            <ul class="collection">
+                <li class="collection-item" ng-repeat="comment in topic.comments" ng-if="!comment.anonymous">{{comment.content}} : {{comment.user.name}}</li>
+                <li class="collection-item" ng-repeat="comment in topic.comments" ng-if="comment.anonymous">{{comment.content}} : Anonymous</li>
+            </ul>
+
+        </li>
+
+    </ul>
+
+
+
+
+</div>
+
+</body>
+
+
+
+</html>

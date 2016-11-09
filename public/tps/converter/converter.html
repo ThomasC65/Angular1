@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="converter">
+<head>
+    <title>Converter</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+    <script type="text/javascript" src="converter.js"></script>
+</head>
+<body ng-controller="ConverterCtrl">
+
+<!-- Take a look at javascripts/converter.js -->
+
+<h1>A Neat Converter !!</h1>
+
+<input type="text" name="input" />
+
+<select name="inputUnit"  ng-options="unit for unit in units">
+</select>
+
+=>
+
+<span>{{output}}</span>
+
+<select name="outputUnit"  ng-options="unit for unit in units">
+</select>
+
+
+<button ng-click="convert()">Convert</button>
+
+</body>
+</html>

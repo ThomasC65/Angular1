@@ -1,0 +1,25 @@
+<section class="application-root">
+
+    <header>
+        <h2>What a marvellous App</h2>
+    </header>
+
+    <input placeholder="filter name from parent" ng-model="$ctrl.filter">
+
+    <div>
+    <button ng-click="$ctrl.action = $ctrl.display ; $ctrl.actionName='Display' ">Display</button>
+    <button ng-click="$ctrl.action = $ctrl.delete  ; $ctrl.actionName='Delete' ">Delete</button>
+        <div>Action is {{$ctrl.actionName}}</div>
+    </div>
+
+
+
+
+    <div>Root app ses the loggedIn as : {{$ctrl.loggedIn.name}}</div>
+
+    <panel-component users = "$ctrl.users" logged-in="$ctrl.loggedIn" text="Additional Text"></panel-component>
+
+
+    <footer>Made with &hearts; in Toulouse</footer>
+
+</section>

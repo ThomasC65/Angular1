@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+
+
+<div>
+
+    interpreter : {{ 2+2 }} ;<br/>
+
+    {{!false}} ;  {{!false && 1}};  {{ 1 && !false }};  {{false && 1}} ;  <br/>
+    {{'Hello'}} ; {{"Hello"}}; {{"Hello" + ' World'}}
+</div>
+
+
+<div>
+
+<input ng-model="data">
+    {{data}}
+</div>
+
+<ul>
+    <li ng-repeat="user in mock | filter:{admin:true}">{{user.name}}</li>
+</ul>
+
+<form>
+    <input type="email" name="email">
+    <input type="date">
+    <input type="submit">
+</form>
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function($scope){
+
+                $scope.users = globals.users;
+
+                $scope.data="Some data";
+
+
+
+            })
+
+
+
+</script>
+</html>

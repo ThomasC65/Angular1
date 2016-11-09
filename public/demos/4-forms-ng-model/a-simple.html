@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Using simple ng-model</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+    <style>
+
+        .ng-dirty {
+            border: blue thin solid;
+        }
+
+        .ng-pristine {
+            border: red thin solid;
+        }
+
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+    <h2>You typed : {{data}}</h2>
+
+    <div>
+        <input ng-model="data">
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+
+                $scope.data = "";
+
+            })
+
+</script>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Interaction</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+
+<ul>
+    <li ng-repeat="user in users | filter:{admin:false}">{{user.name}} <button ng-click="">Set Admin</button></li>
+</ul>
+
+<button ng-click="setHowardAdmin()">Set Howard Admin</button>
+
+
+<ul>
+    <li ng-repeat="admin in admins">{{admin.name}} ; {{admin.statement}}</li>
+</ul>
+
+<div ng-controller="MessageCtrl">
+
+    {{message}}
+
+</div>
+<input type="text" placeholder="Filter by name" ng-model="name" ng-change="">
+
+</body>
+
+<script type="text/javascript">
+
+    /**
+     * Goals : Add interaction with the user list
+     * Look : we have a service  and a filter !
+     *
+     * - Split users between simple users and Admins
+     * - compare binding a function call and binding a function
+     * - When clicking on 'Set Admin', the user become an admin and disappear from user's list
+     * - When changing the input, the users are filtered by their names
+     */
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope, usersService) {
+
+                $scope.users = globals.users;
+                $scope.admins = usersService.getAdmins(globals.users);
+                $scope.name="";
+               // $scope.admins = usersService.getAdminFunction;
+
+                $scope.setAdmin = function(user){
+                    //set admin
+                }
+
+
+                $scope.filterUsers = function(){
+                    var list=globals.users
+                    //searchFor is supposed to be what is in the text input
+                    var searchFor = $scope.name;
+                    //console.log(searchFor)
+
+                    var result = []
+                    for (var i = 0 ; i < list.length ; i++){
+                        if ( list[i].name.toLowerCase().indexOf(searchFor.toLowerCase() )>=0){
+                            result.push(list[i])
+                        }
+                    }
+                    return result;
+                }
+
+                /**
+                 * TODO :
+                 *  - set Howard Admin
+                 *  - set any user admin
+                 *  - hide button if user is already admin                 *
+                 */
+
+
+            })
+            .controller("MessageCtrl", function ($scope) {
+
+
+                //TODO : display a message when a user is set admin
+
+            })
+            .service("usersService", function(){
+
+                var service = {
+                    getAdmins : function(users){
+
+                        var result = []
+                        //ouch, no underscore there...
+                        for (var i = 0 ; i < users.length ; i++){
+                            if (users[i].admin){
+                                result.push(users[i])
+                            }
+                        }
+                        return result;
+                    },
+                    getAdminFunction : function(){
+                        return service.getAdmins(globals.users)
+                    }
+                };
+
+                return service;
+
+            });
+
+
+</script>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <script type="text/javascript" src="../../javascripts/libs/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="../../javascripts/libs/angular.min.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<h1>Here is with 'y' : {{people | custom:'y'}}</h1>
+
+<input ng-model='param' placeholder="Search here">
+<ul>
+    <li ng-repeat="name in people | custom:param">{{name}}</li>
+</ul>
+
+
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+
+                $scope.data = "Some data";
+                $scope.people = users;
+                $scope.param = "";
+
+            })
+            .filter("custom", function () {
+
+                return function (users, val) {
+                    if (!val){
+                        val='Raj';
+                    }
+                    var result = [];
+                    $.each(users, function(index, user){
+                        if (user.name.toLowerCase().indexOf(val.toLowerCase())>=0){
+                            result.push(user.name.toUpperCase());
+                        }
+                    });
+                    return result;
+                };
+            })
+
+    var nicolas = {admin: true, id: 1, email: "nz@robusta.io", name: "Nicolas", statement: "Star Wars rocks"},
+            leonard = {admin: true, id: 2, email: "leonard@robusta.io", name: "Leonard", statement: "Star Trek rocks"},
+            sheldon = {id: 3, email: "sheldon@robusta.io", name: "Sheldon"},
+            raj = {id: 4, email: "raj@robusta.io", name: "Raj"},
+            howard = {id: 5, email: "howie@robusta.io", name: "Howard"},
+            penny = {admin: true, id: -16, email: "penny@robusta.io", name: "Penny", statement: "Penny ! Penny ! Penny !"},
+            emy = {id: 7, email: "emy@robusta.io", name: "Emy"},
+            bernie = {id: 8, email: "bernie@robusta.io", name: "Bernadette"}
+
+
+    var users = [nicolas, leonard, sheldon, raj, howard, penny, emy, bernie]
+
+</script>
+</html>

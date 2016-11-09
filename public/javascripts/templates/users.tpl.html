@@ -1,0 +1,5 @@
+<ul class="user-list">
+    <li class='user' ng-repeat="user in list" >{{user.email}}
+        <button ng-click="setAdmin(user)" ng-show="!user.admin">set Admin</button>
+    </li>
+</ul>

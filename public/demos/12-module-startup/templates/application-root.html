@@ -1,0 +1,21 @@
+<section class="application-root">
+
+    <header>
+        <h1>What a marvellous App</h1>
+    </header>
+
+
+    <div ng-if="$ctrl.loading">
+        <h2>Loading. Please wait</h2>
+        <img src="./templates/loader.gif">
+    </div>
+
+
+
+
+    <panel-component users = "$ctrl.users" logged-in="$ctrl.loggedIn" ng-if="!$ctrl.loading"></panel-component>
+
+
+    <footer>Made with &hearts; in Toulouse</footer>
+
+</section>

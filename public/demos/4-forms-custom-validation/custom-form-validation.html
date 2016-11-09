@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>FORMS : Custom Validation</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+
+    <style>
+
+        .ng-dirty {
+            border: blue thin solid;
+        }
+
+        .ng-pristine {
+            border: red thin solid;
+        }
+
+        .ng-valid {
+            background-color: #c3ffc8;
+        }
+
+        .ng-invalid {
+            background-color: #bca1a8;
+        }
+
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<ul>
+    <li ng-repeat="user in users">
+        {{user.name}} - {{user.email}} - {{user.admin}}
+        <button ng-click="model.current = user">Edit</button>
+
+    </li>
+</ul>
+
+<h2>Your number is : {{model.small}} ; Max allowed is 3</h2>
+<div>
+    <form novalidate name="formName">
+
+        Name: <input type="text" ng-model="model.name"/><br/>
+
+        Small Number: <input type="number" ng-model="model.small" field-rule/><br/>
+        <input type="button" ng-click="reset()" value="Reset"/>
+        <div ng-if="formName.$error.fieldRule ">
+            Your number is wrong !
+        </div>
+        <div ng-if="! formName.$error.fieldRule ">
+            Your number looks right
+        </div>
+
+    </form>
+</div>
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+                $scope.model = {
+                    name : 'John',
+                    small : 2
+                }
+                $scope.users = globals.users;
+
+
+            })
+            .directive('fieldRule', function () {
+
+                return {
+                    restrict: 'A',
+                    require: 'ngModel',
+                    link: function (scope, elm, attrs, ngModelCtrl) {
+
+                        console.log('linking');
+                        function control() {
+
+                            console.log('validating $viewValue ', ngModelCtrl.$viewValue,
+                                    'with current model value : ',ngModelCtrl.$modelValue);
+                            //find the scope Value
+                            var fieldValue = parseInt(ngModelCtrl.$viewValue);
+                            if (fieldValue > 3){
+                                console.log("too big, won't work");
+                                ngModelCtrl.$setValidity('fieldRule', false);
+                                return  ngModelCtrl.$viewValue;
+                            }else{
+                                ngModelCtrl.$setValidity('fieldRule', true);
+                                return  ngModelCtrl.$viewValue;
+                            }
+
+                        }
+
+                        ngModelCtrl.$parsers.unshift(control)
+
+
+                    }
+                }
+
+
+            })
+
+</script>
+</html>

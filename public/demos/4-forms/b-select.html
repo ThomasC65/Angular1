@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Select</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<div>
+    <h2>Version simple</h2>
+
+    <p> My favorite user is :
+        <select ng-model="selectedUser">
+            <option ng-repeat="item in users" value="{{item.id}}">{{item.name}}</option>
+        </select>
+    </p>
+
+    <p>I have chosen : {{selectedUser.name}} ({{selectedUser.id}})</p>
+
+</div>
+
+<div>
+
+    <h2>Version ng-option - Arrays</h2>
+    <p><select ng-model="selectedUser2" ng-options="item.name for item in users"></select>
+
+    </p>
+
+    <p>I have chosen : {{selectedUser2.name}} ({{selectedUser2.id}})</p>
+
+</div>
+
+
+
+<div>
+
+    <h2>Version ng-option - Object </h2>
+    <p>
+        My gender is : <select ng-model="selectedGender" ng-options="value for (key , value) in genders"></select>
+    </p>
+    <p>I have chosen : {{selectedGender}}</p>
+
+</div>
+
+
+<div>
+
+    <h2>Version ng-option - Object with 'select as' </h2>
+    <p>
+        My gender is : <select ng-model="selectedGender2" ng-options="key as value for (key , value) in genders"></select>
+    </p>
+    <p>I have chosen : {{selectedGender2}}</p>
+
+</div>
+
+
+
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function($scope){
+
+                $scope.users = globals.users;
+
+                $scope.obj={key1:"value1", key2:"value2", key3:"value3"}
+                $scope.genders={male:"Male", female:"female", unknown:"not sure"}
+
+
+            })
+
+
+</script>
+</html>

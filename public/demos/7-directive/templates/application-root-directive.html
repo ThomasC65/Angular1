@@ -1,0 +1,20 @@
+<section class="application-root">
+
+    <header>
+        <h2>What a marvellous App</h2>
+    </header>
+
+
+
+    <div>Root app ses the loggedIn as : {{vm.loggedIn.name}}</div>
+
+    <button ng-click="vm.setBlue()">Set Blue</button>
+
+    <panel-directive users = "vm.users" logged-in="vm.loggedIn" name="directivePanel">
+
+    </panel-directive>
+
+
+    <footer>Made with &hearts; in Toulouse</footer>
+
+</section>

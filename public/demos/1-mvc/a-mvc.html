@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>MVC</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body >
+
+<div ng-controller="AppCtrl">
+    <h2> Here are the users </h2>
+<ul>
+    <li ng-if="!user.admin"  ng-repeat="user in users">{{user.id }} :  {{user.name}}({{user.email}})
+    <button ng-click="user.admin=true">Set Admin</button>
+    </li>
+</ul>
+
+<h2> now admins : </h2>
+
+
+    <ul>
+        <li ng-repeat="admin in getAdmins(users)">{{admin.id }} :  {{admin.name}}({{admin.email}}
+            <button ng-click="admin.admin=false">Set Admin</button>
+        </li>
+
+    </ul>
+
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    /**
+     * Goals :
+     * - Get started with Angular
+     * - What does the ng-repeat directive ?
+     * - What is the created variable in the scope context ?
+     */
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+
+                $scope.users = globals.users;
+
+                $scope.getAdmins = function(users){
+                    return users.filter(function(user){
+                        return user.admin;
+                    });
+                };
+
+                //TODO :
+                /**
+                 * - display ids and emails of each users
+                 * - show the admins: create a list of admins from globals.users
+                 */
+
+            });
+
+
+
+</script>
+</html>

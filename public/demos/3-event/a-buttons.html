@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Playing with events</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-style="{'background-color':bg}" ng-controller="AppController">
+
+<button ng-click="count = count + 1" ng-dblclick="count = count + 10" >
+    Increment (on single or double click)
+</button>
+count: {{count}}
+
+<br/>
+Checkbox <input type="checkbox" ng-checked="count>10">
+
+<br/>
+text : <input ng-model="text" ng-focus="focus()" ng-change="change()">
+
+
+</body>
+
+<script type="text/javascript">
+
+    /**
+     * Goals : set-up the app, play with events
+     *
+     * - Define an AppController
+     *
+     * - What's the condition for the checkbox to be checked ?
+     *
+     * - define a `$scope.bg="yellow"` variable
+     *
+     * - change the background color when the text is focused
+     *
+     *
+     * - change the background color with ng-change
+     *
+     * - How to have more control on this event ?
+     */
+
+    angular.module("demo", [])
+            .controller("AppController", function ($scope) {
+
+                $scope.bg="SpringGreen";
+
+                $scope.focus =function () {
+                    $scope.bg = '#87CEFA';
+                };
+
+                $scope.change =function () {
+                    $scope.bg = $scope.text;xwF?NHCG
+                }
+            });
+
+
+
+
+</script>
+</html>

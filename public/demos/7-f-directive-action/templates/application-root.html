@@ -1,0 +1,26 @@
+<section class="application-root">
+
+    <header>
+        <h2>What a marvellous App</h2>
+    </header>
+
+    <input placeholder="filter name from parent" ng-model="$ctrl.filter">
+
+    <div>
+    <button ng-click="$ctrl.action = $ctrl.display ; $ctrl.actionName='Display' ">Display</button>
+    <button ng-click="$ctrl.action = $ctrl.delete  ; $ctrl.actionName='Delete' ">Delete</button>
+        <div>Action is {{$ctrl.actionName}}</div>
+    </div>
+
+
+
+
+    <div>Root app ses the loggedIn as : {{$ctrl.loggedIn.name}}</div>
+
+    <!-- action is not yet executed. It's still a STRING !!!-->
+    <panel-component users = "$ctrl.users" logged-in="$ctrl.loggedIn" unknown="$ctrl.delete($ctrl.filter)"></panel-component>
+
+
+    <footer>Made with &hearts; in Toulouse</footer>
+
+</section>

@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>All the Watch</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+    <style>
+
+
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body>
+
+<div ng-controller="AppCtrl">
+
+
+    <h2>All Users : array </h2>
+
+
+    <ul>
+        <li ng-repeat="user in users">{{user.name}}
+            <button ng-click="users.splice($index, 1)">delete</button>
+        </li>
+    </ul>
+
+    <h2>User specific : {{sheldon.name}} is from state {{sheldon.data.state.label}}</h2>
+
+    <div>
+
+
+        <button ng-click="sheldon.name='Gollum'">Change Sheldon's name</button>
+        <br/>
+        <button ng-click="sheldon.data.state.label='California'">Change Sheldon's data.state.label</button>
+        <br/>
+        <button ng-click="users=[]">users = []</button>
+        <br/>
+        <button ng-click="sheldon={name:'Shelly'}">Sheldon='Shelly'</button>
+        <br/>
+        <button ng-click="clear()">Clear</button>
+
+    </div>
+
+
+
+
+    <h2>Users array</h2>
+
+    <ul>
+        <li>$watch("users"); : {{watch}}</li>
+        <li>$watchCollection("users") : {{watchCol}}</li>
+        <li>$watch("users", f, true) : {{watchTrue}}</li>
+    </ul>
+
+    <h2>User Sheldon</h2>
+
+    <ul>
+        <li>Watch : {{watchObj}}</li>
+        <li>WatchCollection : {{watchColObj}}</li>
+        <li>Watch (true) : {{watchTrueObj}}</li>
+    </ul>
+
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+
+
+                init();
+
+                function init(){
+                    $scope.users = globals.users;
+                    $scope.sheldon = getSheldon();
+
+                    getSheldon().data = {
+                        state: {
+                            label: "Texas"
+                        }
+                    }
+                }
+
+
+                function getSheldon() {
+                    return $scope.users[2];
+                }
+
+                $scope.$watch("users", trigger("watch"));
+                $scope.$watchCollection("users", trigger("watchCol"));
+                $scope.$watch("users", trigger("watchTrue"), true);
+
+                $scope.$watch("sheldon", trigger("watchObj"));
+                $scope.$watchCollection("sheldon", trigger("watchColObj"));
+                $scope.$watch("sheldon", trigger("watchTrueObj"), true);
+
+
+                function trigger (scopeElement){
+                    console.log("trigger for "+scopeElement);
+                    return function(newVal, oldVal){
+                        $scope[scopeElement] = "triggered !!";
+                    };
+                }
+
+                $scope.clear = function(){
+
+
+                    $scope.watch="";
+                    $scope.watchCol="";
+                    $scope.watchTrue="";
+                    $scope.watchObj="";
+                    $scope.watchColObj="";
+                    $scope.watchTrueObj="";
+
+                }
+
+            });
+
+
+    function globalGetAdmins(users) {
+
+        var result = []
+        //ouch, no underscore there...
+        for (var i = 0; i < users.length; i++) {
+            if (users[i].admin) {
+                result.push(users[i])
+            }
+        }
+        return result;
+    }
+
+</script>
+</html>

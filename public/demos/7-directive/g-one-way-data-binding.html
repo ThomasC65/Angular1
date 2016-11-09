@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>One way data-binding</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+    <style></style>
+
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<div>
+    Testing :
+    <users-component users="users" reason="changeModel.reason"></users-component>
+    <button ng-click="check()">Check current users in Appl Ctrl</button>
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+
+    function UserCtrl() {
+        console.log('Component users at the controller start :', this.users);
+        this.sorting = function(){
+            this.users = angular.copy(this.users).sort();
+            console.log('Component users after sorting :', this.users);
+        };
+
+        this.$postLink = function () {
+            console.log('initializing');
+            this.users = angular.copy(this.users).sort();
+        };
+
+        /*
+        this.users = angular.copy(this.users).sort();
+        console.log('users in component after controller creation', this.users);
+        */
+    }
+
+    angular.module("demo", [])
+            .controller('AppCtrl', function ($scope) {
+                $scope.users = ['John', 'Jim', 'Albert', 'Rosetta', 'Luc', 'Sheldon', 'Fitzgerald'];
+                $scope.check = function () {
+                    console.log('Application Ctrl : current users', $scope.users);
+                }
+            })
+            .component("usersComponent", {
+                template: '<ul><li ng-repeat = "user in $ctrl.users">{{user}}</li></ul>' +
+                '<button ng-click="$ctrl.sorting()">Sort users in Component Ctrl</button>',
+                controller: UserCtrl,
+                bindings: {
+                    users: '<'
+                }
+            });
+
+
+</script>
+</html>

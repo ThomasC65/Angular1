@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>John Papa's Style</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body>
+
+<div>
+
+    <application-root-directive></application-root-directive>
+
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    var debug ={
+
+    };
+
+    /**
+     * Goals :
+     * - Get started with Angular
+     * - What does the ng-repeat directive ?
+     * - What is the created variable in the scope context ?
+     */
+    function ApplicationCtrl(UserLogService, $rootScope, $scope) {
+
+        var vm = this;
+        vm.users = UserLogService.getUsers();
+        vm.loggedIn = UserLogService.getLoggedIn();
+
+        this.setBlue = function () {
+            $rootScope.$broadcast('panel:blue');
+        };
+
+
+        debug.appScope = $scope;
+
+
+    }
+
+    function UserPanelCtrl($scope, $element) {
+        console.log("in userPanelCtrl");
+        alert('this controller | ' + this.name + ' | is created');
+
+        $scope.$on('panel:blue', function () {
+            console.log('setting blue');
+            $element.css('color', 'blue');
+        });
+
+        debug.panelScope = $scope;
+
+    }
+
+    angular.module("demo", [])
+            .factory("UserLogService", function () {
+
+                return {
+                    getLoggedIn: function () {
+                        return globals.users.filter(function (user) {
+                            return user.name.toLowerCase().indexOf('nicolas') >= 0;
+                        })[0];
+                    },
+                    getUsers: function () {
+                        return globals.users;
+                    }
+                }
+            })
+            .directive("applicationRootDirective", function () {
+
+                return {
+                    templateUrl: './templates/application-root-directive.html',
+                    bindToController: true,
+                    controllerAs: 'vm',
+                    controller: ApplicationCtrl
+                }
+
+
+            })
+
+            .directive("panelDirective", function () {
+
+                return {
+                    templateUrl: './templates/user-panel-directive.html',
+                    controllerAs: 'vm',
+                    scope:{}, //TODO : what happen without this scope line ? with true ?
+                    bindToController: {
+                        users: '=',
+                        loggedIn: '=',
+                        name: '@'
+                    },
+                    controller: UserPanelCtrl
+                }
+            });
+
+
+</script>
+</html>

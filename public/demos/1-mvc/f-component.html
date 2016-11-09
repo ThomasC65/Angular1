@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Component</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body>
+
+<div>
+
+    <application-root-component></application-root-component>
+
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    /**
+     * Goals :
+     * - Get started with Angular
+     * - What does the ng-repeat directive ?
+     * - What is the created variable in the scope context ?
+     */
+    function ApplicationCtrl(UserLogService){
+
+        this.users = UserLogService.getUsers();
+        this.loggedIn = UserLogService.getLoggedIn();
+
+    }
+
+    function UserPanelCtrl(){
+        console.log ("in userPanelCtrl")
+    }
+
+    angular.module("demo", [])
+            .factory("UserLogService", function () {
+
+                return {
+                    getLoggedIn: function () {
+                        return globals.users.filter(function (user) {
+                            return user.name.toLowerCase().indexOf('nicolas') >= 0;
+                        })[0];
+                    },
+                    getUsers: function () {
+                        return globals.users;
+                    }
+                }
+            })
+            .component("applicationRootComponent", {  // returns an object, not a root
+
+                templateUrl: './templates/application-root.html',
+                controller : ApplicationCtrl
+
+
+            })
+
+            .component("panelComponent", {
+                templateUrl: './templates/user-panel.html',
+                bindings:{
+                    users : '<',   // one way data-binding
+                    loggedIn : '<'
+                },
+                controller : UserPanelCtrl
+            });
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,53 @@
+[
+  {
+    "admin": true,
+    "id": 1,
+    "email": "nz@robusta.io",
+    "name": "Nicolas",
+    "statement": "Star Wars rocks"
+  },
+  {
+    "admin": true,
+    "id": 2,
+    "email": "leonard@robusta.io",
+    "name": "Leonard",
+    "statement": "Star Trek rocks"
+  },
+  {
+    "admin": false,
+    "id": 3,
+    "email": "sheldon@robusta.io",
+    "name": "Sheldon"
+  },
+  {
+    "admin": false,
+    "id": 4,
+    "email": "raj@robusta.io",
+    "name": "Rajesh"
+  },
+  {
+    "admin": false,
+    "id": 5,
+    "email": "howie@robusta.io",
+    "name": "Howard"
+  },
+  {
+    "admin": true,
+    "id": 6,
+    "email": "penny@robusta.io",
+    "name": "Penny",
+    "statement": "Penny ! Penny ! Penny !"
+  },
+  {
+    "admin": false,
+    "id": 7,
+    "email": "emy@robusta.io",
+    "name": "Emy"
+  },
+  {
+    "admin": false,
+    "id": 28,
+    "email": "bernie@robusta.io",
+    "name": "Bernadette"
+  }
+]

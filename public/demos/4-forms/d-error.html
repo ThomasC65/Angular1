@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>ERRORS - FORMS</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+
+    <style>
+
+        .ng-dirty {
+            border: blue thin solid;
+        }
+
+        .ng-pristine {
+            border: red thin solid;
+        }
+
+        .ng-valid {
+            background-color: #c3ffc8;
+        }
+
+        .ng-invalid {
+            background-color: #bca1a8;
+        }
+
+        .form-error {
+            border: red thin dashed;
+            color: red;
+        }
+
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<ul>
+    <li ng-repeat="user in users">
+        {{user.name}} - {{user.email}} - {{user.admin}}
+        <button ng-click="model.current = user">Edit</button>
+
+    </li>
+</ul>
+
+<h2>You typed : {{model.current.name}}</h2>
+
+<div>
+    <form novalidate name="form">
+
+        Name: <input type="text" ng-model="model.current.name"/><br/>
+        E-mail: <input type="email" ng-model="model.current.email" name="email" required="required"/><br/>
+        Admin : <input type="radio" ng-model="model.current.admin" name="admin" value="true"/>oui
+        <input type="radio" ng-model="model.current.admin" value="false"/>non<br/>
+
+        <input type="button" ng-click="reset()" value="Reset"/>
+        <input type="submit" ng-click="update(user)" value="Save"/>
+    </form>
+</div>
+
+
+<button ng-click="display(form.$error)">Display errors</button>
+
+<h2>Gobals form error </h2>
+<div ng-if="form.$error == {}" class="form-error">
+    Form globalement incorrect
+    size : {{form.$error.length}}
+</div>
+
+<h2>Specific errors</h2>
+<div ng-if="form.$submitted || form.email.$touched" class="form-error">
+    <span ng-if="form.email.$error.required">Tell us your email.</span>
+    <span ng-if="form.email.$error.email">This is not a valid email.</span>
+</div>
+
+
+
+<div>
+    <h1>How to check if form has any error ?</h1>
+    <h2>List global form errors</h2>
+    <ul>
+        <li ng-repeat="(key, errors) in form.$error track by $index"><strong>{{ key }}</strong> errors
+            <ul>
+                <li ng-repeat="e in errors">{{ e.$name }} has an error: <strong>{{ key }}</strong>.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <div>
+        hasError : {{hasError(form.$error)}}
+    </div>
+
+    <div>
+        is valid : {{form.$valid}}
+    </div>
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+                $scope.model = {}
+                $scope.users = globals.users;
+
+                $scope.display = function (object) {
+                    console.log(object);
+                }
+
+                $scope.hasError = function (form$error) {
+                    return ! isEmpty(form$error);
+                }
+            })
+
+
+    function isEmpty(obj) {
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop))
+                return false;
+        }
+
+        return true;
+    }
+</script>
+</html>

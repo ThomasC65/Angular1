@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Event Scope</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+    <style>
+
+        div{
+            padding: 5px;;
+        }
+
+        .child{
+            background-color: cyan;
+
+        }
+        .app{
+            background-color: coral;
+        }
+        .brother{
+            background-color: #A0A000;
+        }
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="TopCtrl">
+
+<div class="top">
+
+    <h1>Top</h1>
+    <p>Top data : {{data}}</p>
+    <!-- <input ng-model="data"> -->
+    <button ng-click="sync()">Sync children</button>
+
+    <p>Child Data : {{childData}}</p>
+</div>
+
+
+<div ng-controller="ChildCtrl" class="child">
+
+    <h1>Child</h1>
+    <p>Here is also the top data : {{data}}</p>
+    <p>Here is also the child data : {{childData}}</p>
+
+    <p>
+        change the childData : <input ng-model="childData">
+        <button ng-click="up()">Sync to Up and Brother</button>
+    </p>
+</div>
+
+<div ng-controller="BrotherCtrl" class="brother">
+
+    <h1>Brother</h1>
+    <p>Here is also the brother data : {{data}}</p>
+    <p>Here is also the child data : {{childData}}</p>
+
+</div>
+
+
+<div>
+    Let's have fun and rename <strong>childData</strong> by <strong>data</strong>
+
+</div>
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("TopCtrl", function ($scope, $rootScope) {
+
+                $scope.data = "Some data";
+
+                $scope.$on("sync:down", function(event,topData, oldData){
+                    $scope.data = topData
+                    alert("top says : "+topData+", was : "+oldData)
+                })
+
+                $scope.sync = function(){
+                    $rootScope.$broadcast("sync:down", "Veuillez vous synchroniser")
+                }
+
+
+            })
+            .controller("ChildCtrl", function ($scope) {
+
+                $scope.data = "Child Data";
+
+                $scope.up = function(){
+                    $scope.$emit("up", $scope.childData)
+                }
+
+                $scope.$on("sync:down", function(event,fatherData){
+                    $scope.childData = fatherData;
+                })
+
+            })
+            .controller("BrotherCtrl", function ($scope) {
+
+                //let's work with $rootScope here
+                $scope.$on("sync:down", function(event,fatherData){
+                    $scope.childData = fatherData;
+                })
+            })
+
+
+    /**
+     * TODO : cliquer sur sync
+     */
+</script>
+</html>

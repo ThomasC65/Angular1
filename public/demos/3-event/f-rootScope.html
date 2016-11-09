@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Root Scope</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+
+<ul>
+    <li ng-repeat="user in users">{{user.name}}</li>
+</ul>
+
+<button ng-click="setHowardAdmin()">Set Howard Admin</button>
+
+
+<ul>
+    <li ng-repeat="admin in admins">{{admin.name}} ; {{admin.statement}}</li>
+</ul>
+
+<div ng-controller="MessageCtrl">
+
+    {{message}}
+
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+
+            .controller("AppCtrl", function ($scope, usersService, $rootScope) {
+
+                $scope.users = globals.users;
+                $scope.admins = usersService.getAdmins(globals.users);
+
+
+                $scope.setHowardAdmin = function () {
+                    $rootScope.$broadcast('setAdmin', "howard");
+                }
+                /**
+                 * TODO :
+                 *  - set Howard Admin
+                 *  - set any user admin
+                 *  - hide button if user is already admin                 *
+                 */
+
+
+            })
+            .controller("MessageCtrl", function ($scope) {
+
+
+                $scope.$on('setAdmin', function (event, data) {
+                    $scope.message = data;
+                });
+
+            })
+            .service("usersService", function () {
+
+                var service = {
+                    getAdmins: function (users) {
+
+                        var result = []
+                        //ouch, no underscore there...
+                        for (var i = 0; i < users.length; i++) {
+                            if (users[i].admin) {
+                                result.push(users[i])
+                            }
+                        }
+                        return result;
+                    }
+                };
+
+                return service;
+
+            });
+
+
+</script>
+</html>

@@ -1,0 +1,23 @@
+.separate{
+    border: thin solid grey;
+    border-radius: 3px;
+    margin: 20px;
+    padding: 5px;
+}
+
+.bg {
+    background-color: #cddcff;
+}
+
+.sunny{
+    background-color: red;
+}
+
+.hightlight{
+    color : greenyellow;
+    background-color: #9e5bff;
+    border: medium solid orangered;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 5px;
+}

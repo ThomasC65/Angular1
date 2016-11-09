@@ -1,0 +1,102 @@
+                                    <!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Outside Event</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/jquery-1.11.1.js"></script>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<h1>Click me I'm Famo.us</h1>
+<img src="http://famo.us/assets/images/iphone-5.png" id="famous" class=".famous" width="100px" ng-click="show()"/>
+
+<h1>{{data}}</h1>
+
+</body>
+
+<script type="text/javascript">
+
+    /**
+     * Goals : Understand (a bit) $scope.$apply(), $scope.$digest() and $scope.$watch()
+     *
+     *  - try scope.$digest() instead of scope.$apply()
+     *  - uncomment the WATCH
+     *
+     *  At the end, notice that both $apply() and $watch() will call $digest()
+     *
+     *  From the docs :  "If a $watch changes the value of the model, it will force additional $digest cycle"
+     */
+
+    var someVariable = "Come into my $scope.$World";
+
+
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function ($scope) {
+
+                var clicked = false;
+
+                console.log("I'm Rrangulär, and I'm ready")
+
+                $scope.show = function(){
+                    clicked = true;
+                    //$scope.data = "Bienvenue à Levallois";
+                    alert("Hello Angular World ");
+                }
+
+
+
+                $scope.data = someVariable
+
+
+
+                // WATCH
+                //1st param : an expression in the context of the scope
+
+                $scope.$watch("data", function (newData, oldData) {
+                    if (!clicked){
+                        return;
+                    }
+                    console.log("I'm Rrangulär and I've detected a change : " + newData + " compare to : " + oldData)
+                    $scope.data="Ouh I changed again !!!";
+                })
+
+
+            })
+
+    console.log("I'm in the middle")
+
+    $(document).ready(function () {
+        console.log("I'm jQuery, and I'm ready")
+
+        // gettign the scope object
+        var scope = angular.element('body').scope()
+        console.log ('I am injQuery ans i got some Angular'+scope.data);
+
+        $("#famous").on("click", function () {
+
+            alert("Hello jQuery")
+
+
+            scope.data = "Come into my $('#World')";
+            //scope.$apply();
+            //scope.$digest();
+            //scope.$apply() will call scope.$digest()
+
+
+            scope.$apply(function(){
+                scope.data = "Come into my $('#World')";
+                //using a function allow $digest even with error
+            })
+            console.log('changing to '+scope.data)
+
+        })
+    })
+</script>
+</html>

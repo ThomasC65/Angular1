@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <script type="text/javascript" src="../javascripts/libs/angular.min.js"></script>
+    <style>
+        .comment{
+            background-color: lightblue;
+        }
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<h1>Here is {{data}}</h1>
+
+<input ng-model="data">
+
+<comment content="{{data}}"/>
+
+</body>
+
+<script type="text/javascript">
+
+
+    /**
+     * Goals : I want to test my directive using Karma
+     *
+     *
+     */
+    angular.module("demo", [])
+            .controller("AppCtrl", function($scope){
+
+                $scope.data="Some data";
+
+            })
+            .directive("comment", function(){
+
+                return {
+                    template: "<div class='comment'>{{content}}</div>",
+                    restrict: 'E',
+                    scope:{
+                        content:'@'
+                    },
+                    link: function postLink(scope, element, attrs) {
+                        //No binding here
+                        element.append("<div class='comment'>"+attrs.content+"</div>");
+                    }
+                }
+            })
+
+
+</script>
+</html>

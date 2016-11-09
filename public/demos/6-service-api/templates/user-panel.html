@@ -1,0 +1,15 @@
+<!-- Only diff with the directive template is to change vm by $ctrl -->
+<div class="user-panel">
+
+    <input placeholder="filter name from child" ng-model="$ctrl.filterValue">
+
+    <button ng-click="$ctrl.fire(); $ctrl.unknown()">Fire the Action !</button>
+    <div>Logged in as <strong>{{$ctrl.loggedIn.name}}</strong></div>
+
+    <div>
+        <h3>Also here </h3>
+
+        <div ng-repeat="user in $ctrl.users" ng-if="user.name != $ctrl.loggedIn.name">{{user.name}}</div>
+
+    </div>
+</div>

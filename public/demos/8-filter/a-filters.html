@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <script type="text/javascript" src="../../javascripts/libs/angular.min.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+
+<p>
+    <ul>
+        <li>uppercase : <input ng-model="data"> ->{{data | uppercase}} </li>
+        <li>Limit : {{array |limitTo:4}}<br/></li>
+        <li>Money :{{cash|currency:"$":2}}</li>
+        <li>peoples : {{people.length}}</li>
+        <li>peoples by name: <span ng-repeat="user in people | orderBy:'name' "> {{user.name}} - </span></li>
+        <li>peoples by score : {{people | orderBy:score |limitTo:4|json|uppercase}}</li>
+
+
+
+</ul>
+Filter : filter
+    <ul>
+
+        <input ng-model='f'>
+        <li>string : {{people | filter:f }}</li>
+        <br/>
+
+
+        <li>function : {{people | filter:scoreMatch }}</li>
+
+     </ul>
+
+List of Admins :
+
+        <ul>
+            <li ng-repeat="user in people | filter:{admin:true}">{{user.name}}</li>
+        </ul>
+
+
+</p>
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function($scope){
+
+                $scope.data="Some data";
+                $scope.cash=28.1185;
+                $scope.array=[1,9,8,6,35,6,7,8,9,485,658,2.1,-56,1];
+                $scope.people=users;
+                $scope.score = function(user){
+                    return user.id + user.name.length
+                }
+
+                $scope.scoreMatch = function(user){
+                    return user.id + user.name.length == 8
+                }
+
+                $scope.match={$:'Y'}
+
+            })
+
+    var nicolas = {admin: true, id: 1, email: "nz@robusta.io", name: "Nicolas", statement: "Star Wars rocks"},
+            leonard = {admin: true, id: 2, email: "leonard@robusta.io", name: "Leonard", statement: "Star Trek rocks"},
+            sheldon = {id: 3, email: "sheldon@robusta.io", name: "Sheld"},
+            raj = {id: 4, email: "raj@robusta.io", name: "Rajy"},
+            howard = {id: 5, email: "howie@robusta.io", name: "Howard"},
+            penny = {admin: true, id: -16, email: "p@robusta.io", name: "Penny", statement: "Penny ! Penny ! Penny !"},
+            emy = {id: 7, email: "Emy@robusta.io", name: "Emy"},
+            bernie = {id: 8, email: "bernie@robusta.io", name: "Bernadette"}
+
+
+    var users = [nicolas, leonard, sheldon, raj, howard, penny, emy, bernie]
+
+</script>
+</html>

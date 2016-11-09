@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html>
+<head>
+    <title>Using modules with dependency</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body >
+
+<div ng-app="demo">
+
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+    /**
+     * Goals : look at the module concept
+     * - What are other way to create modules in the JS Galaxy ?
+     * - What's the difference between `angular.module("demo", [])` && `angular.module("demo")` ?
+     */
+    angular.module("demo", ["dependency"])
+            .config(function() { // provider-injector
+                console.log("demo configuration");
+            }).
+            run(function() {
+                console.log("ok, let's go ! x = "+x);
+            });
+
+    //note the circular depedency. Just for fun, but it's safe !
+    angular.module("dependency", ["demo"])
+            .config(function() { // provider-injector
+                console.log("dep configuration");
+                x = 42;
+            }).
+            run(function() {
+                console.log("ok, dep can run !");
+            });
+
+    var x = 0;
+
+</script>
+</html>

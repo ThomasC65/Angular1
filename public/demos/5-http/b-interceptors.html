@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Service - Using http</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+
+<ul>
+    <li ng-repeat="user in users">{{user.name}}</li>
+</ul>
+
+
+<ul>
+    <li ng-repeat="admin in admins">{{admin.name}} ; {{admin.statement}}</li>
+</ul>
+
+<div class="user-count">
+
+    There are {{count}} admins there
+
+</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+
+    angular.module("demo", [])
+            .config( function($httpProvider){
+
+
+                $httpProvider.interceptors.push(function() {
+                    return {
+                        'request': function(config) {
+                            console.log('sending a request with', config);
+                            return config;
+                        },
+
+                        'response': function(response) {
+                            console.log('receiving this response', response);
+                            return response;
+                        }
+                    };
+                });
+                console.log($httpProvider);
+
+            })
+            //see the injection
+            .controller("AppCtrl", function ($scope, usersService, dataService) {
+
+                $scope.users = globals.users;
+                $scope.admins = usersService.getAdmins();
+                $scope.count = usersService.getAdmins().length;
+
+
+                dataService.testIntercept();
+
+
+            })
+            .factory("usersService", function(){
+
+                var service = {
+                    getAdmins : function(){
+                        return globals.users.filter(function(user){
+                            return user.admin;
+                        });
+                    }
+                };
+
+                return service;
+
+            })
+            .factory('dataService', function($http){
+
+
+                var service = {
+                    testIntercept : function(){
+                        return $http.get('./data.json').then(function(response){
+                            return response.data;
+                        });
+                    }
+                };
+
+
+
+                return service;
+
+
+            });
+
+
+
+</script>
+</html>

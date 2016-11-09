@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body>
+
+<div ng-controller="AppCtrl">
+<img src="http://3.bp.blogspot.com/-hcqXm5LhQA0/UTuby03zTwI/AAAAAAAAAlo/JfzPyX0yrJk/s1600/Eiffel-Tower-Paris-France-Autumn.jpg"
+     width="500px">
+
+<h1>City name is {{name}}</h1>
+
+
+</div>
+
+<div ng-controller="InjectCtrl">
+
+    <button ng-click="inject()">Inject me</button>
+
+    <h1>{{service}}</h1>
+</div>
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .config(function ($provide) {
+                console.log("I'm in the config")
+                $provide.factory("$city", function () {
+                    return {
+                        name : "Paris",
+                        pollution: "Very High"
+                    }
+
+                })
+            })
+            .controller("AppCtrl", function ($scope, $city) {
+                console.log("I'm in the AppCtrl")
+                $scope.name = $city.name
+
+            })
+            .controller("InjectCtrl", function ($scope, $injector) {
+                console.log("I'm in the InjectCtrl")
+
+                $scope.inject = function(){
+                    $scope.service = $injector.get("$city");
+                }
+
+
+            })
+
+
+</script>
+</html>

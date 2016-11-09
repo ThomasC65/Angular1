@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html ng-app="demo">
+<head>
+    <title>Form validation</title>
+
+    <link rel="stylesheet" type="text/css" href="../styles.css"/>
+    <script type="text/javascript" src="../libs/angular.min.js"></script>
+    <script type="text/javascript" src="../mock-data.js"></script>
+
+
+    <style>
+
+        form.ng-valid{
+            background-color: lightcyan;
+        }
+        form.ng-invalid{
+            background-color: lightcoral;
+        }
+        input.ng-valid {
+            color:blue;
+            border: thin solid darkgreen;
+        }
+        input.ng-invalid {
+            color:red;
+            border: medium dashed darkmagenta;
+        }
+        p {color:blue;}
+    </style>
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-controller="AppCtrl">
+
+<h1>I work with {{copy.email}} wich is a {{copy.smart}} smart guy</h1>
+
+<form  class="simple-form" name="form">
+
+
+    <input ng-model="user.email" type="email" placeholder="enter your smart email"><br/>
+    <label name="box" for="smart">Are you smart ?</label>
+        <input ng-model="user.smart" type="checkbox" id="smart" required><br/>
+
+    <button type="submit" ng-click="submit()">OK</button>
+</form>
+
+</body>
+
+<script type="text/javascript">
+
+    angular.module("demo", [])
+            .controller("AppCtrl", function($scope){
+
+                $scope.user={email:"default@robusta.io", smart:false}
+                $scope.data=5;
+
+
+                $scope.copy = angular.copy($scope.user)
+                //$scope.form.$setValidity("size", false);
+
+                $scope.submit = function(){
+                    $scope.copy =  angular.copy($scope.user);
+                }
+
+            })
+
+
+</script>
+</html>

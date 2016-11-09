@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!-- The ng-app is related to a module -->
+<html>
+<head>
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="css/fora.css"/>
+    <script type="text/javascript" src="javascripts/libs/angular.min.js"></script>
+
+</head>
+<!-- The controller is found in the spotted module -->
+<body ng-app="fora">
+<div  ng-controller="UsersController">
+<div>{{error}}</div>
+<!-- use ng-click -->
+<button class="fetch" id="fetch" ng-click="fetchUsers()">Click me for getting users and admins !!</button>
+
+<div>
+
+    <h1>Users</h1>
+
+  <li class="user-fetch" ng-repeat="user in users">{{user.name}}</li>
+
+
+    <h1>Admins</h1>
+
+
+</div>
+
+</div>
+</body>
+
+<script type="text/javascript" src="javascripts/fora.js"></script>
+<script type="text/javascript" src="javascripts/controllers.js"></script>
+<script type="text/javascript" src="javascripts/directives.js"></script>
+<script type="text/javascript" src="javascripts/filters.js"></script>
+<script type="text/javascript" src="javascripts/services.js"></script>
+
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="forum">
+<head>
+
+
+    <!--Import materialize.css-->
+    <!--  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" /> -->
+
+    <meta charset="UTF-8">
+    <title>Fora by Robusta Code</title>
+    <link rel="stylesheet" type="text/css" href="../css/fora.css"/>
+    <title>Forum</title>
+
+    <!-- <script type="text/javascript" src="js/materialize.min.js"></script>-->
+    <script type="text/javascript" src="../javascripts/libs/angular.min.js"></script>
+    <script type="text/javascript" src="../javascripts/mock-data.js"></script>
+    <script type="text/javascript" src="forum.js"></script>
+    <script type="text/javascript" src="components/comment.component.js"></script>
+    <script type="text/javascript" src="components/topic.component.js"></script>
+
+
+    <style>
+        .like{
+            color : red;
+        }
+        .dislike{
+            color: blue;
+        }
+
+    </style>
+
+</head>
+<body>
+<div ng-controller="ForumController">
+    <h2> Here are the users </h2>
+    <ul class="collection">
+        <li class="collection-item"  ng-repeat="user in users">{{user.id }} :  {{user.name}}({{user.email}})       </li>
+    </ul>
+
+
+    <h2> Here are the titles </h2>
+
+
+    <p>Choose your topic : </p>
+
+    <select class="collection" ng-model="model.selectTopic" ng-options="topic.title for topic in topics"></select>
+
+    <h4> Comments from {{model.selectTopic.title}} </h4>
+
+
+
+    <show-topic topic="model.selectTopic" users="users">
+
+    </show-topic>
+
+
+
+</div>
+
+
+
+
+</body>
+
+
+
+</html>

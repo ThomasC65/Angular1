@@ -4,14 +4,14 @@
 
 
     <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+    <!--  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" /> -->
 
     <meta charset="UTF-8">
     <title>Fora by Robusta Code</title>
     <link rel="stylesheet" type="text/css" href="../css/fora.css"/>
     <title>Forum</title>
 
-    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <!-- <script type="text/javascript" src="js/materialize.min.js"></script>-->
     <script type="text/javascript" src="../javascripts/libs/angular.min.js"></script>
     <script type="text/javascript" src="../javascripts/mock-data.js"></script>
     <script type="text/javascript" src="forum.js"></script>
@@ -32,10 +32,35 @@
 <div ng-controller="ForumController">
     <h2> Here are the users </h2>
     <ul class="collection">
-        <li class="collection-item"  ng-repeat="user in users">{{user.id }} :  {{user.name}}({{user.email}}        </li>
+        <li class="collection-item"  ng-repeat="user in users">{{user.id }} :  {{user.name}}({{user.email}})       </li>
     </ul>
+
+
     <h2> Here are the titles </h2>
+
+
+        <p>Choose your topic : </p>
+
+        <select class="collection" ng-model="model.selectTopic" ng-options="topic.title for topic in topics"></select>
+
+    <h4> Comments from {{model.selectTopic.title}} </h4>
     <ul class="collection">
+        <li class="collection-item" ng-repeat="comment in model.selectTopic.comments" ng-if="!comment.anonymous">{{comment.content}} : {{comment.user.name}}</li>
+        <li class="collection-item" ng-repeat="comment in model.selectTopic.comments" ng-if="comment.anonymous">{{comment.content}} : Anonymous</li>
+    </ul>
+
+
+    <form novalidate>
+        <select class="collection" ng-model="model.selectUser" ng-options="user.name for user in users"></select>
+        <input type="text" ng-model="model.comment.content">
+        <input type="submit" ng-click="add()" value="Ok" />
+
+
+    </form>
+
+
+
+   <!-- <ul class="collection">
         <li class="collection-item" ng-repeat="topic in topics" >   {{topic.title}}
             <ul class="collection">
                 <li class="collection-item" ng-repeat="comment in topic.comments" ng-if="!comment.anonymous">{{comment.content}} : {{comment.user.name}}</li>
@@ -44,7 +69,7 @@
 
         </li>
 
-    </ul>
+    </ul> -->
 
 
 

@@ -5,6 +5,23 @@ angular.module("forum", [])
 
         $scope.topics = globals.topics;
 
+        $scope.model={
+            selectTopic:undefined
+        };
+
+        $scope.add= function () {
+
+            $scope.model.selectTopic.comments.push({
+                content: $scope.model.comment.content,
+                user: $scope.model.selectUser
+            });
+
+        }
+
+       /* $scope.add=function (comments) {
+            comments.push(model.comment.content, comment.user.name)
+
+        }*/
 
 
         /*$scope.getComments = function(topics){
